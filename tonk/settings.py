@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import django_heroku
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +29,7 @@ SECRET_KEY = 'rztil3x6_diu^tra=_1a6ad$fyk^vy5_7%ibtx2$$u3l_qs&j3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -58,7 +58,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tonk.urls'
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
+SESSION_SAVE_EVERY_REQUEST=True
+SESSION_COOKIE_AGE=30
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -94,7 +96,9 @@ DATABASES = {
 }
 
 
-
+import dj_database_url
+df=dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(df)
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

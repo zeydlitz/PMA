@@ -1,0 +1,1 @@
+web: gunicorn tonk.wsgi --log-file -
