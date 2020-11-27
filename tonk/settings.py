@@ -107,8 +107,8 @@ df = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(df)
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH='/app/.heroku/vendor/lib/libgdal.so'
+GEOS_LIBRARY_PATH='/app/.heroku/vendor/lib/libgeos_c.so'
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
