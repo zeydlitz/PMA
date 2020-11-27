@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'web',
     'whitenoise.runserver_nostatic',
     'django_inlinecss',
-    'leaflet'
+    'leaflet',
+    'django.contrib.gis'
 ]
 LEAFLET_CONFIG = {'DEFAULT_CENTER': (55.0, 26.0),
                   'DEFAULT_ZOOM': 5,
@@ -66,7 +67,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'tonk.urls'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
-SESSION_COOKIE_AGE = 30
+SESSION_COOKIE_AGE = 180
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
