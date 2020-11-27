@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import django_heroku
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/'
@@ -31,7 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,9 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'web',
     'whitenoise.runserver_nostatic',
-    'django_inlinecss'
+    'django_inlinecss',
+    'leaflet'
 ]
-
+LEAFLET_CONFIG = {'DEFAULT_CENTER': (55.0, 26.0),
+                  'DEFAULT_ZOOM': 5,
+                  'MIN_ZOOM': 3,
+                  'MAX_ZOOM': 18,
+                  'DEFAULT_PRECISION': 6,
+                  }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,9 +64,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tonk.urls'
-SESSION_EXPIRE_AT_BROWSER_CLOSE=True
-SESSION_SAVE_EVERY_REQUEST=True
-SESSION_COOKIE_AGE=30
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 30
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -95,9 +101,9 @@ DATABASES = {
     }
 }
 
-
 import dj_database_url
-df=dj_database_url.config(conn_max_age=600)
+
+df = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(df)
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -117,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -130,7 +135,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
