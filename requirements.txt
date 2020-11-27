@@ -10,8 +10,9 @@ django-heroku==0.3.1
 django-inlinecss==0.3.0
 django-leaflet==0.27.1
 future==0.18.2
-GDAL==3.1.4
+GDAL @ file:///D:/programmig/django/tonk/GDAL-3.1.4-cp36-cp36m-win_amd64.whl
 gunicorn==20.0.4
+numpy==1.19.4
 psycopg2==2.8.6
 pynliner==0.8.0
 pytz==2020.4
