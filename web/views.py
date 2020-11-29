@@ -10,6 +10,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 username=''
 password=''
 
+def Table(request):
+    return render(request,'table.html')
+
 
 def Index(request):
     global username, password
