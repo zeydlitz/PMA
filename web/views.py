@@ -1,17 +1,37 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
-from  django.shortcuts import redirect
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate, login
 from .models import Sensor
+from .models import Registar as reg
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
-username=''
-password=''
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from chartjs.views.lines import BaseLineChartView
+
+username = ''
+password = ''
+
 
 def Table(request):
-    return render(request,'table.html')
+    return render(request, 'table.html')
+
+
+def data(request):
+    date = []
+    temp = []
+    queryset1 = reg.objects.all()
+    for i in queryset1:
+        date.append(i.date)
+        temp.append(i.temperature)
+    return JsonResponse(data={
+        'date': date,
+        'temp': temp,
+    })
+
+
+
 
 
 def Index(request):
@@ -19,21 +39,24 @@ def Index(request):
     user = authenticate(username=username, password=password)
     if user is not None:
         queryset = Sensor.objects.all()
-        ar=[]
+        ar = []
         for i in queryset:
-            ar.append([i.longitude,i.latitude])
-        return render(request,'index.html',{'object_list':ar})
+            ar.append([i.longitude, i.latitude])
+        return render(request, 'index.html', {'object_list': ar})
     else:
         return HttpResponseRedirect(reverse('login'))
 
+
 def LogIn(request):
-    global username,password
-    username=''
-    password=''
+    global username, password
+    username = ''
+    password = ''
     return HttpResponseRedirect(reverse('login'))
+
+
 def LogIn(request):
-    global username,password
-    if request.method == 'POST': # If the form has been submitted...
+    global username, password
+    if request.method == 'POST':  # If the form has been submitted...
 
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -42,35 +65,33 @@ def LogIn(request):
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         else:
-            return render(request, 'login.html', {'user': "Can not login. Try again",'error':True})
+            return render(request, 'login.html', {'user': "Can not login. Try again", 'error': True})
     else:
-        return render(request,'login.html',{'error':False})
+        return render(request, 'login.html', {'error': False})
 
 
 def Registar(request):
     global username, password
-    if request.method == 'POST': # If the form has been submitted...
+    if request.method == 'POST':  # If the form has been submitted...
         name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
         email = request.POST.get("email")
         password = request.POST.get("password")
         ps = request.POST.get("password_repeat")
-        if(ps!=password):
-            render(request, 'register.html', {'pass': "Password does not match", "pass_e":True,"user_e":False})
+        if (ps != password):
+            render(request, 'register.html', {'pass': "Password does not match", "pass_e": True, "user_e": False})
         try:
 
             user = User.objects.create_user(username=name,
-                                        last_name=last_name,
-                                        email=email,
-                                        password=password)
+                                            last_name=last_name,
+                                            email=email,
+                                            password=password)
             user.save()
             login(request, user)
         except:
-            return render(request,'register.html', {'user': "Can not create a user","pass_e":False,"user_e":True})
-        username=name
-        password=password
+            return render(request, 'register.html', {'user': "Can not create a user", "pass_e": False, "user_e": True})
+        username = name
+        password = password
         return HttpResponseRedirect(reverse('index'))
     else:
-        return render(request,'register.html')
-
-
+        return render(request, 'register.html')

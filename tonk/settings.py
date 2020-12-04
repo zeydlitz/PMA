@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django_inlinecss',
     'leaflet',
-    'django.contrib.gis'
+    'django.contrib.gis',
+    'chartjs'
 ]
 LEAFLET_CONFIG = {'DEFAULT_CENTER': (55.0, 26.0),
                   'DEFAULT_ZOOM': 5,
