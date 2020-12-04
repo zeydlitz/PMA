@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django_inlinecss',
     'leaflet',
     'django.contrib.gis',
-    'chartjs'
+    'chartjs',
+    'django_tables2'
 ]
 LEAFLET_CONFIG = {'DEFAULT_CENTER': (55.0, 26.0),
                   'DEFAULT_ZOOM': 5,
@@ -81,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request'
             ],
         },
     },
@@ -107,7 +109,6 @@ import dj_database_url
 
 df = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(df)
-
 
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')

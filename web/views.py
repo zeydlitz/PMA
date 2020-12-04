@@ -8,14 +8,19 @@ from .models import Sensor
 from .models import Registar as reg
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from chartjs.views.lines import BaseLineChartView
 
 username = ''
 password = ''
 
 
 def Table(request):
-    return render(request, 'table.html')
+    global username, password
+    user = authenticate(username=username, password=password)
+    S = Sensor.objects.all()
+    if user is not None:
+        return render(request, 'table.html', locals())
+    else:
+        return HttpResponseRedirect(reverse('login'))
 
 
 def data(request):
@@ -29,9 +34,6 @@ def data(request):
         'date': date,
         'temp': temp,
     })
-
-
-
 
 
 def Index(request):
