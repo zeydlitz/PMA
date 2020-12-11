@@ -8,9 +8,61 @@ from .models import Sensor
 from .models import Registar as reg
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-
+import datetime
+from .models import Registar as ref,Sensor,Region
+from django_pandas.io import read_frame
+from django.core.mail import send_mail
+import pandas as pd
 username = ''
 password = ''
+
+
+def proc(request):
+    global username, password
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if 'proc1' in request.POST:
+            qs = ref.objects.all()
+            df = read_frame(qs)
+            date1 = request.POST.get("pc1_d1")
+            date2 = request.POST.get("pc1_d2")
+            date1 = datetime.datetime.strptime(date1, '%Y-%m-%dT%H:%M')
+            date2 = datetime.datetime.strptime(date2, '%Y-%m-%dT%H:%M')
+            data = df[(df['date'] >= date1.date()) & (df['date'] <= date2.date()) & (df['time'] > date1.time()) & (df['time'] < date2.time())]
+            data = data['temperature']
+            send_mail(username, data.to_string(), 'maksimka.ivashkevich27@gmail.com', [user.email])
+        if 'proc2' in request.POST:
+            qs = ref.objects.all()
+            df = read_frame(qs)
+            time1 = request.POST.get("pc2_d1")
+            time2 = request.POST.get("pc2_d2")
+            time_object1 = datetime.datetime.strptime(time1, '%H:%M').time()
+            time_object2 = datetime.datetime.strptime(time2, '%H:%M').time()
+            data = df[(df['time'] > time_object1) & (df['time'] < time_object2)]
+            str = f"Max tem in range {data['temperature'].max()}  and min {data['temperature'].min()}"
+            send_mail(username, str, 'maksimka.ivashkevich27@gmail.com', [user.email])
+        if 'proc3' in request.POST:
+            qs = ref.objects.all()
+            df = read_frame(qs)
+            df['dev']=df.temperature- df.temperature.std()
+            send_mail(username, df['dev'].to_string(), 'maksimka.ivashkevich27@gmail.com', [user.email])
+        if 'proc4' in request.POST:
+            qs = Sensor.objects.all()
+            df = read_frame(qs)
+            qs1 = Region.objects.all()
+            df1 = read_frame(qs1)
+            str_n = request.POST.get("str")
+            df1 = df1[df1['nameregion']==str_n]
+            df['regionid']= df['regionid'].str.replace('\\D','',regex=True).astype(int)
+            buff = pd.merge(df1, df, left_on="regionid", right_on="regionid")
+            buff = buff[['longitude','longitude']]
+            buff = buff.to_string()
+            send_mail(username, buff, 'maksimka.ivashkevich27@gmail.com', [user.email])
+        return render(request, 'data.html', locals())
+    else:
+        return HttpResponseRedirect(reverse('login'))
+class AboutView(TemplateView):
+    template_name = "data.html"
 
 
 def Table(request):
@@ -58,8 +110,7 @@ def LogIn(request):
 
 def LogIn(request):
     global username, password
-    if request.method == 'POST':  # If the form has been submitted...
-
+    if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(username=username, password=password)

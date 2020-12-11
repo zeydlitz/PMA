@@ -54,41 +54,7 @@
 
         }
 
-        {#$(function () {#}
-        {##}
-        {#    var $populationChart = $("#data");#}
-        {#    $.ajax({#}
-        {#        url: $populationChart.data("url"),#}
-        {#        success: function (data) {#}
-        {##}
-        {#            var ctx = $populationChart[0].getContext("2d");#}
-        {##}
-        {#            new Chart(ctx, {#}
-        {#                type: 'line',#}
-        {#                data: {#}
-        {#                    labels: data.date,#}
-        {#                    datasets: [{#}
-        {#                        label: 'date',#}
-        {#                        backgroundColor: 'blue',#}
-        {#                        data: data.temp#}
-        {#                    }]#}
-        {#                },#}
-        {#                options: {#}
-        {#                    responsive: true,#}
-        {#                    legend: {#}
-        {#                        position: 'top',#}
-        {#                    },#}
-        {#                    title: {#}
-        {#                        display: true,#}
-        {#                        text: 'Date and temp'#}
-        {#                    }#}
-        {#                }#}
-        {#            });#}
-        {##}
-        {#        }#}
-        {#    });#}
-        {##}
-        //
+
     </script>
 
 </head>
@@ -105,7 +71,9 @@
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="{% url 'index' %}"><i
                             class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url "table" %}"><i
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'proc' %}"><i
+                            class="fas fa-tachometer-alt"></i><span>Procedura</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url "proc" %}"><i
                             class="fas fa-table"></i><span>Table</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i
                             class="far fa-user-circle"></i><span>Login</span></a></li>
@@ -179,7 +147,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
-                                            <canvas id="data" height="540"></canvas>
+                                        <canvas id="data" height="540"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +198,7 @@
                     datasets: [{
                         label: 'Temperature',
                         data: data.temp,
-                              fill: false
+                        fill: false
                     }]
                 },
                 options: {

@@ -35,9 +35,10 @@ class Sensor(models.Model):
     name = models.CharField(db_column='Name', max_length=30, blank=True, null=True)  # Field name made lowercase.
     longitude = models.FloatField()
     latitude = models.FloatField()
+
     @property
     def lat_lng(self):
-        return [ getattr(self,'longitude',getattr(self,'latitude'))]
+        return [getattr(self, 'longitude', getattr(self, 'latitude'))]
 
     class Meta:
         managed = False

@@ -1,12 +1,11 @@
 {% load static %}
-{% load render_table from django_tables2 %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>Dashboard - Brand</title>
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -71,7 +70,6 @@
                                 </form>
                             </div>
                         </li>
-
                         <div class="d-none d-sm-block topbar-divider"></div>
                         <li class="nav-item dropdown no-arrow">
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
@@ -93,28 +91,54 @@
                     </ul>
                 </div>
             </nav>
-            <div class="container-fluid">
-                <h3 class="text-dark mb-4">Team</h3>
-                <div class="card shadow">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Sensor info</p>
+            <div class="container-fluid" style="padding-right: 24px;padding-left: 24px;">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Data</h3>
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-primary py-2"><label>Date and time</label><input
+                                    type="datetime-local" name="pc1_d1"><label>Date and time&nbsp;</label><input
+                                    type="datetime-local" name="pc1_d2">
+                                <button class="btn btn-primary" name="proc1" type="submit">Button</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-primary py-2"><label>Date and time</label><input
+                                    type="time" name="pc2_d1"><label>Date and time&nbsp;</label><input
+                                    type="time" name="pc2_d2">
+                                <button class="btn btn-primary" name="proc2" type="submit">Button</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-primary py-2"><label>Deviation</label>
+                                <button class="btn btn-primary" name="proc3" type="submit">Button</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-left-primary py-2"><label>Region</label><input type="text" name="str">
+                                <button class="btn btn-primary" name="proc4" type="submit">Button</button>
+                            </div>
+                        </div>
                     </div>
-                    {% render_table S %}
-                </div>
+                </form>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Maksim Ivashkevich 2020</span></div>
-                </div>
-            </footer>
         </div>
-        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
-    <script src="{% static "js/jquery.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/chart.min.js" %}"></script>
-    <script src="{% static "js/bs-init.js" %}"></script>
-    <script src="{% static "js/jquery.easing.js" %}"></script>
-    <script src="{% static "js/theme.js" %}"></script>
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © Maksim Ivashkevich 2020</span></div>
+            </div>
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/chart.min.js" %}"></script>
+<script src="{% static "js/bs-init.js" %}"></script>
+<script src="{% static "js/jquery.easing.js" %}"></script>
+<script src="{% static "js/theme.js" %}"></script>
 </body>
 
 </html>

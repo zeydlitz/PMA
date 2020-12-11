@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import url, include
-from .views import Index, LogIn, Registar, Table,data
+from .views import Index, LogIn, Registar, Table, data, proc
 
 urlpatterns = [
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path('table/', Table, name='table'),
     path('logout/', LogIn, name='logout'),
     path('signup/', Registar, name='signup'),
-    path('data/',data,name='data'),
+    path('data/', data, name='data'),
+    path('proc/', proc, name='proc'),
 
 ]
